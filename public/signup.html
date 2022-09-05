@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="./css/sign.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.1.1/css/all.css">
+    <!-- <link rel="icon" href="./img/reddit.png"> -->
+</head>
+
+<body>
+    <section class="img"></section>
+    <main>
+        <section class="guide-text">
+            <h1>Sign Up </h1>
+            <p>
+                By continuing, you are setting up a Reddit<br>
+                account and agree to our <span class="linked-text">User Agreement</span> and<br>
+                <span class="linked-text">Privacy Policy</span>.
+            </p>
+        </section>
+        <section class="signup-form form ">
+            <section class="main-in">
+                <div class="input-container ">
+                    <div class="input-label">
+                        <input id="email" type="text" name="email">
+                        <label for="email"><span class="label-content">Email</span></label>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-check"></i>
+                        <i class="fa-solid fa-exclamation"></i>
+                    </div>
+                </div>
+                <small>* This is message </small>  
+            </section>
+            <section class="main-in">
+                <div class="input-container">
+                    <div class="input-label">
+                        <input id="username" type="text" name="username">
+                        <label for="username"><span class="label-content">Choose A Username</span></label>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-check"></i>
+                        <i class="fa-solid fa-exclamation"></i>
+                    </div>
+                </div>
+                <small>* This is message </small>
+            </section>
+            <section class="main-in">
+                <div class="input-container">
+                    <div class="input-label">
+                        <input id="password" type="text" name="password">
+                        <label for="password"><span class="label-content">Password</span></label>
+                    </div>
+                    <div class="icon">
+                        <i class="fa-solid fa-check"></i>
+                        <i class="fa-solid fa-exclamation"></i>
+                    </div>
+                </div>
+                <small>* This is message </small>
+            </section>
+
+            <select class="input-container" name="country" id="country">
+                <option value="" selected="true" disabled>Country</option>
+                <option value="1">static</option>
+                <option value="1">static</option>
+                <option value="1">static</option>
+                <option value="1">static</option>
+            </select>
+
+        </section>
+        <button class="submit-btn">SIGN UP </button>
+        <section class="guide-text"><p>Already a redditor? <a href="/login" style="font-weight: bold ;" class="linked-text">LOG IN</a></p></section>
+    </main>
+    <script src="./js/sign.js"></script>
+    <script src="./js/validation.js"></script>
+</body>
+
+</html>
