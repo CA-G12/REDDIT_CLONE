@@ -148,8 +148,10 @@ select:focus {
 }
 
 small {
-    font-size: 10px;
+    margin-top: 10px;
+    font-size: 12px;
     color: #c70000;
+    display: none;
 }
 
 .error-message{
