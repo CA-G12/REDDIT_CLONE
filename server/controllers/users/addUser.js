@@ -1,4 +1,5 @@
 // const createError = require('http-errors');
+const { join } = require('path');
 const createError = require('http-errors');
 
 const { addUserQuery, checkUserQuery } = require('../../database/queries');
@@ -19,7 +20,7 @@ const addUser = (req, res, next) => {
       checkUserQuery(req.body.email)
         .then((users) => {
           if (users.rows.length) {
-            res.json(createError(400, 'This email is already exists'));
+            res.json({ msg: 'This email is already exists'});
           } else {
             addUserQuery(req.body)
               .then((user) => {
@@ -27,15 +28,21 @@ const addUser = (req, res, next) => {
                   res.cookie('token', token, {
                     httpOnly: true,
                     secure: true,
-                  }).json({ path: 'private/home.html' });
-                }).catch((err) => { res.json(createError(500, `1server error ${err}`)); });
+                  }).json({ path: 'private' });
+                }).catch((err) => { next(createError(500, `server error ${err}`)); });
               })
-              .catch((err) => { res.json(createError(500, `2 server error ${err}`)); });
+              .catch((err) => { next(createError(500, `server error ${err}`)); });
           }
         })
-        .catch((error) => console.log(error));
+        .catch((err) => { next(createError(500, `server error ${err}`)); });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        // console.log(err);
+        res.json({err});
+      } else {
+        next(createError(500, `server error ${err}`));
+      }
+    });
 };
 module.exports = addUser;
-

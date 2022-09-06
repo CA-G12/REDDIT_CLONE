@@ -8,10 +8,10 @@ const schemaValidator = (object, schema) => new Promise((resolve, reject) => {
     reject(new Error('schema not provided'));
   }
 
-  const { error, value } = schema.validate(object);
+  const { error, value } = schema.validate(object, { abortEarly: false });
 
   if (error) {
-    reject(new Error(error));
+    reject(error);
   }
   resolve(value);
 });

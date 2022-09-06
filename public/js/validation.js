@@ -2,7 +2,10 @@
 const email = document.querySelector('#email');
 const username = document.querySelector('#username');
 const password = document.querySelector('#password');
+const country = document.querySelector('#country');
 const submitBtn = document.querySelector('.submit-btn');
+const smalls = Array.from(document.querySelectorAll('small'));
+
 let emailValue = false;
 let passwordValue = false;
 let usernameValue = false;
@@ -41,18 +44,29 @@ function signUp() {
       email: email.value,
       username: username.value,
       password: password.value,
+      country: country.value,
     }),
   })
+    .then((res) => res.json())
     .then((res) => {
-      console.log(res, 'from then');
-      return res.json();
-    })
-    .then((res) => {
-      //   if (res.path) {
-      //     window.location.href = res.path;
-      //   } else {
-      //     console.log(res.msg);
-      //   }
+      smalls.forEach((small) => { small.style.display = 'none'; });
+
+      if (res.err) {
+        res.err.details.forEach((error) => {
+          switch (error.context.label) {
+            case 'email': { smalls[0].textContent = error.message; break; }
+            case 'username': { smalls[1].textContent = error.message; break; }
+            case 'password': { smalls[2].textContent = error.message; break; }
+            default: { smalls[2].textContent = error.message; }
+          }
+        });
+        smalls.forEach((small) => { small.style.display = 'block'; })
+      } else if (res.msg === 'This email is already exists') {
+        smalls[0].textContent = `* ${res.msg}`;
+        smalls[0].style.display = 'block';
+      } else if (res.path) {
+        window.location.href = res.path;
+      }
     })
     .catch((error) => console.log(error));
 }

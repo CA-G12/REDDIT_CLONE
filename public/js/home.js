@@ -2,6 +2,7 @@ const searchContainer = document.querySelector('.search-container');
 const searchInput = document.querySelector('.search');
 const dropdown = document.querySelector('.dropdown');
 const dropDownBtn = document.querySelector('.icons-container');
+const signBtns = document.querySelectorAll('.btn');
 
 searchContainer.addEventListener('click', () => {
   searchContainer.style.border = '1px solid #0079d3';
@@ -21,3 +22,10 @@ window.addEventListener('click', (e) => {
     dropdown.classList.remove('active');
   }
 });
+
+Array.from(signBtns).forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    e.target.children[0].click();
+  })
+});
+

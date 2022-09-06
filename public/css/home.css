@@ -7,6 +7,10 @@
     font-family: 'Poppins', sans-serif;
 }
 
+a {
+    text-decoration: none;
+}
+
 body {
     background-color: #dae0e6;
     height: 100vh;
@@ -94,12 +98,18 @@ header .account .btn {
 
 header .account .login-btn {
     background-color: #FFF;
+}
+
+header .account .login-btn a {
     color: #0079d3;
 }
 
 header .account .signup-btn {
-    color: #FFF;
     background-color: #0079d3;
+}
+
+header .account .signup-btn a {
+    color: #FFF;
 }
 
 .icons-container {
@@ -108,7 +118,7 @@ header .account .signup-btn {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    background-color :#FFF ;
+    background-color: #FFF;
     padding: 2px;
     border: none;
 }
@@ -120,40 +130,43 @@ header .account .signup-btn {
 
 
 .dropdown {
-    display: none ;
+    display: none;
     position: absolute;
-    right: 20px ;
-    top : calc(100%);
+    right: 20px;
+    top: calc(100%);
 }
 
-.dropdown.active{
+.dropdown.active {
     display: block;
 }
+
 .drop-menu {
     z-index: 1;
     width: 230px;
-    height :280px;
-    background-color : #FFF ;
-    padding : 10px 0px ;
-    border-radius : 8px ;
-    box-shadow : 0 2px 5px rgba(0 , 0 , 0 ,0.1 );
-    display: flex ;
-    flex-direction : column; 
+    height: 280px;
+    background-color: #FFF;
+    padding: 10px 0px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
+
 .drop-menu a {
-    color : black ;
-    width: 90% ;
-    padding : 10px;
-    text-decoration: none;
+    color: black;
+    width: 90%;
+    padding: 10px;
 }
-.drop-menu a  i {
+
+.drop-menu a i {
     padding-right: 8px;
 }
 
-.drop-menu a:hover{
-    background-color : #f1f0f0 ;
+.drop-menu a:hover {
+    background-color: #f1f0f0;
 }
+
 /* ----------------------------------------------- */
 
 .page {
@@ -231,8 +244,7 @@ main .post:hover {
 
 .user-name {
     font-size: 12px;
-    text-decoration: none;
-    color : black;
+    color: black;
 }
 
 .post-content {

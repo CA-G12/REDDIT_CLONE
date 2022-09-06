@@ -1,6 +1,8 @@
 const joi = require('joi');
 
 const authSchema = joi.object({
+  email: joi.string().email().lowercase().required(),
+
   username: joi.string()
     .alphanum()
     .min(3)
@@ -9,8 +11,6 @@ const authSchema = joi.object({
 
   password: joi.string()
     .pattern(/^[a-zA-Z0-9]{3,30}$/).required(),
-
-  email: joi.string().email().lowercase().required(),
 
   country: joi.string().allow(null).allow(''),
 });
