@@ -6,7 +6,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY ,
     username VARCHAR(200) NOT NULL ,
     email VARCHAR(200) NOT NULL UNIQUE ,
-    country VARCHAR(225) ,
+    country VARCHAR(225) DEFAULT 'UNKNOWN' ,
     password TEXT NOT NULL , 
     image TEXT
 );
