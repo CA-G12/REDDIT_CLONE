@@ -54,13 +54,13 @@ function signUp() {
       if (res.err) {
         res.err.details.forEach((error) => {
           switch (error.context.label) {
-            case 'email': { smalls[0].textContent = error.message; break; }
-            case 'username': { smalls[1].textContent = error.message; break; }
-            case 'password': { smalls[2].textContent = error.message; break; }
+            case 'email': { smalls[0].textContent = `* ${error.message}`; break; }
+            case 'username': { smalls[1].textContent = `* ${error.message}`; break; }
+            case 'password': { smalls[2].textContent = '* Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters'; break; }
             default: { smalls[2].textContent = error.message; }
           }
         });
-        smalls.forEach((small) => { small.style.display = 'block'; })
+        smalls.forEach((small) => { small.style.display = 'block'; });
       } else if (res.msg === 'This email is already exists') {
         smalls[0].textContent = `* ${res.msg}`;
         smalls[0].style.display = 'block';
