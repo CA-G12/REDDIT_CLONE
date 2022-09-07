@@ -1,9 +1,7 @@
-// const createError = require('http-errors');
-const { join } = require('path');
 const createError = require('http-errors');
 
 const { addUserQuery, checkUserQuery } = require('../../database/queries');
-const { authSchema } = require('../../helpers/schemaValidation');
+const { signupSchema } = require('../../helpers/schemaValidation');
 const schemaValidator = require('../../helpers/schemaValidator');
 const createToken = require('../../helpers/createToken');
 /*
@@ -15,7 +13,7 @@ handle error
 */
 
 const addUser = (req, res, next) => {
-  schemaValidator(req.body, authSchema)
+  schemaValidator(req.body, signupSchema)
     .then(() => {
       checkUserQuery(req.body.email)
         .then((users) => {
@@ -38,8 +36,7 @@ const addUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        // console.log(err);
-        res.json({err});
+        res.json({ err });
       } else {
         next(createError(500, `server error ${err}`));
       }
