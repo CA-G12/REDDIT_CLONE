@@ -1,6 +1,6 @@
 const joi = require('joi');
 
-const authSchema = joi.object({
+const signupSchema = joi.object({
   email: joi.string().email().lowercase().required(),
 
   username: joi.string()
@@ -10,9 +10,13 @@ const authSchema = joi.object({
     .required(),
 
   password: joi.string()
-    .pattern(/^[a-zA-Z0-9]{3,30}$/).required(),
+    .pattern(/^[a-zA-Z0-9]{8,30}$/).required(),
 
   country: joi.string().allow(null).allow(''),
 });
 
-module.exports = { authSchema };
+const loginSchema = joi.object({
+  email: joi.string().email().lowercase().required(),
+});
+
+module.exports = { signupSchema, loginSchema };
