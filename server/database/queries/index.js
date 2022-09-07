@@ -1,3 +1,3 @@
-const { addUserQuery, checkUserQuery} = require('./usersQueries');
+const { addUserQuery, checkUserQuery, getUserQuery} = require('./usersQueries');
 
-module.exports = { addUserQuery, checkUserQuery };
+module.exports = { addUserQuery, checkUserQuery, getUserQuery };

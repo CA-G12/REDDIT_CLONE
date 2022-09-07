@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const connection = require('../../config/connection');
 
-// const createError = require('http-errors');
+const createError = require('http-errors');
 const addUserQuery = ({
   email, username, password, country,
 }) => {
@@ -15,10 +15,7 @@ const addUserQuery = ({
 
   return connection
     .query(sql)
-    .then((res) => res.rows[0])
-    .catch((e) => console.error(e.stack));
-  //   console.log(res.rows[0]);
-  // { name: 'brianc', email: 'brian.m.carlson@gmail.com' }
+    .then((res) => res.rows[0]);
 };
 
 module.exports = addUserQuery;
