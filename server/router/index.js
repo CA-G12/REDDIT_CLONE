@@ -19,6 +19,7 @@ router.get('/signup', (req, res) => {
 
 
 router.post('/login', loginUser);
+
 router.get('/login', (req, res) => {
   res.status(200).sendFile(join(__dirname, '..', '..', 'public', 'login.html'));
 });

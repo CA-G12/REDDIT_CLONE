@@ -15,20 +15,25 @@ loginBtn.addEventListener('click', () => {
         password: password.value,
       }),
     })
+      .then((res) => res.json())
       .then((res) => {
-        console.log(res, 'from then');
-        return res.json();
-      })
-      .then((res) => {
-        //   if (res.path) {
-        //     window.location.href = res.path;
-        //   } else {
-        //     console.log(res.msg);
-        //   }
+        errorMessage.style.display = 'none';
+
+        if (res.err) {
+          // console.log("test 1" , res.err);
+          errorMessage.textContent = `* ${res.err.details[0].message}`;
+          errorMessage.style.display = 'block';
+        } else if (res.msg) {
+          // console.log("test 2" , res.msg);
+          errorMessage.textContent = `* ${res.msg}`;
+          errorMessage.style.display = 'block';
+        } else if (res.path) {
+          window.location.href = res.path;
+        }
       })
       .catch((error) => console.log(error));
   } else {
+    errorMessage.textContent = "* You can't leave fields empty";
     errorMessage.style.display = 'block';
-    errorMessage.textContent = "*You can't leave fields empty";
   }
 });
