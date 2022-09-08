@@ -40,10 +40,11 @@ const cancelBtn = document.querySelector('.cancel');
 
 postContentInput.addEventListener('focus', () => {
   postContentInput.style.height = '80px';
-  createPostForm.style.height = '200px';
+  createPostForm.style.height = '230px';
   hiddenForm[0].style.display = 'block';
-  hiddenForm[1].style.display = 'block';
+  hiddenForm[2].style.display = 'block';
   createPostCon.style.alignItems = 'start';
+  createPostCon.style.padding = '20px 10px';
 });
 
 cancelBtn.addEventListener('click', () => {
@@ -51,7 +52,48 @@ cancelBtn.addEventListener('click', () => {
   createPostForm.style.height = 'auto';
   hiddenForm[0].style.display = 'none';
   hiddenForm[1].style.display = 'none';
+  hiddenForm[2].style.display = 'none';
   createPostCon.style.alignItems = 'center';
   postContentInput.value = '';
   postImageInput.value = '';
+});
+
+// -----------------------------------------------------------------------
+
+const createPostBtn = document.querySelector('.create-post-btn');
+const errorMessage = document.querySelector('.error-message');
+const postsCon = document.querySelector('.posts-container');
+const createPostDOM = require('./createPost');
+
+createPostBtn.addEventListener('click', () => {
+  if (postContentInput.value && postImageInput.value) {
+    fetch('/private/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: postContentInput.value,
+        password: postImageInput.value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        errorMessage.style.display = 'none';
+        errorMessage.textContent = '';
+
+        if (res.err) {
+          res.err.details.forEach((error) => {
+            errorMessage.textContent += `*${error.message}\n`;
+          });
+          errorMessage.style.display = 'block';
+        } else if (res.post) {
+          postsCon.insertBefore(createPostDOM(res.post), postsCon.firstChild);
+        }
+      })
+      .catch((error) => console.log(error));
+  } else {
+    errorMessage.textContent = "* You can't leave fields empty";
+    errorMessage.style.display = 'block';
+  }
 });

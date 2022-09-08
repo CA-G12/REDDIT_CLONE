@@ -230,7 +230,10 @@ main {
     background-color: #0079d3;
     border: 1px solid #0079d3;
 }
-
+.error-message{
+    margin-left: 20px;
+    color :red;
+}
 .left-side h2 {
     font-size: 12px;
 }
