@@ -19,4 +19,10 @@ const loginSchema = joi.object({
   email: joi.string().email().lowercase().required(),
 });
 
-module.exports = { signupSchema, loginSchema };
+const postSchema = joi.object({
+  content: joi.string().required(),
+  image: joi.string().pattern(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/).allow(null),
+  user_id: joi.number(),
+});
+
+module.exports = { signupSchema, loginSchema, postSchema };
