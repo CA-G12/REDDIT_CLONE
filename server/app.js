@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(compression());
 
 app.use(express.static('public'));
-app.use(express.static('private'));
+app.use('/private',express.static('private'));
 
 app.use(router);
 

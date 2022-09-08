@@ -21,13 +21,13 @@ const createPost = (info) => {
 
   post.appendChild(voteBtns);
 
-  const postInfo = document.querySelector('div');
+  const postInfo = document.createElement('div');
   postInfo.className = 'post-info';
 
-  const userInfo = document.querySelector('div');
+  const userInfo = document.createElement('div');
   userInfo.className = 'user-info';
 
-  const userImg = document.querySelector('div');
+  const userImg = document.createElement('div');
   userImg.className = 'user-img';
   userInfo.appendChild(userImg);
 
@@ -90,5 +90,3 @@ const createPost = (info) => {
 
   return post;
 };
-
-module.exports = createPost;
