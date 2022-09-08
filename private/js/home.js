@@ -26,7 +26,7 @@ window.addEventListener('click', (e) => {
 Array.from(signBtns).forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.target.children[0].click();
-  })
+  });
 });
 
 // ---------------------------------------------------------------------------------
@@ -39,19 +39,69 @@ const hiddenForm = Array.from(document.querySelectorAll('.hidden-form'));
 const cancelBtn = document.querySelector('.cancel');
 
 postContentInput.addEventListener('focus', () => {
-  postContentInput.style.height = '80px';
-  createPostForm.style.height = '200px';
-  hiddenForm[0].style.display = 'block';
-  hiddenForm[1].style.display = 'block';
-  createPostCon.style.alignItems = 'start';
+  showAddPostForm();
 });
 
 cancelBtn.addEventListener('click', () => {
+  hideAddPostForm();
+});
+
+function showAddPostForm() {
+  postContentInput.style.height = '80px';
+  createPostForm.style.height = '230px';
+  hiddenForm[0].style.display = 'block';
+  hiddenForm[2].style.display = 'block';
+  createPostCon.style.alignItems = 'start';
+  createPostCon.style.padding = '20px 10px';
+}
+
+function hideAddPostForm() {
   postContentInput.style.height = '20px';
   createPostForm.style.height = 'auto';
   hiddenForm[0].style.display = 'none';
   hiddenForm[1].style.display = 'none';
+  hiddenForm[2].style.display = 'none';
   createPostCon.style.alignItems = 'center';
   postContentInput.value = '';
   postImageInput.value = '';
+}
+// -----------------------------------------------------------------------
+
+const createPostBtn = document.querySelector('.create-post-btn');
+const errorMessage = document.querySelector('.error-message');
+const postsCon = document.querySelector('.posts-container');
+
+createPostBtn.addEventListener('click', () => {
+  if (postContentInput.value) {
+    fetch('/private/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: postContentInput.value,
+        image: postImageInput.value,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        errorMessage.style.display = 'none';
+        errorMessage.textContent = '';
+
+        if (res.err) {
+          res.err.details.forEach((error) => {
+            errorMessage.textContent += `*${error.message}\n`;
+          });
+          errorMessage.style.display = 'block';
+        } else if (res.post) {
+          console.log(res.post);
+          postsCon.insertBefore(createPost(res.post), postsCon.firstChild);
+          hideAddPostForm();
+        }
+      })
+      .catch((error) => console.log(error));
+  } else {
+    errorMessage.textContent = "* You can't leave fields empty";
+    errorMessage.style.display = 'block';
+  }
 });
