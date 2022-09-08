@@ -1,7 +1,7 @@
 const { join } = require('path');
 const express = require('express');
 const privateRouter = express.Router();
-const { addPost } = require('../controllers');
+const { addPost, getUserInfo } = require('../controllers');
 
 privateRouter.use(express.static('private'));
 privateRouter.get('/', (req, res) => {
@@ -9,5 +9,6 @@ privateRouter.get('/', (req, res) => {
 });
 
 privateRouter.post('/posts', addPost);
+privateRouter.get('/getUser', getUserInfo);
 
 module.exports = privateRouter;

@@ -1,6 +1,6 @@
 BEGIN ;
 
-DROP TABLE IF EXISTS users , posts CASCADE;
+DROP TABLE IF EXISTS users , posts , votes CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY ,
@@ -8,7 +8,7 @@ CREATE TABLE users (
     email VARCHAR(200) NOT NULL UNIQUE ,
     country VARCHAR(225) DEFAULT 'UNKNOWN' ,
     password TEXT NOT NULL , 
-    image TEXT
+    image TEXT DEFAULT 'https://external-preview.redd.it/5kh5OreeLd85QsqYO1Xz_4XSLYwZntfjqou-8fyBFoE.png?auto=webp&s=dbdabd04c399ce9c761ff899f5d38656d1de87c2'
 );
 
 CREATE TABLE posts (
@@ -20,6 +20,14 @@ CREATE TABLE posts (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE votes (
+    post_id INT ,
+    user_id INT ,
+    vote BOOLEAN DEFAULT NULL ,
+    CONSTRAINT userlikepost PRIMARY KEY (post_id, user_id),
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
 
 
 COMMIT;
