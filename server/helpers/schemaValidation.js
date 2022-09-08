@@ -21,7 +21,7 @@ const loginSchema = joi.object({
 
 const postSchema = joi.object({
   content: joi.string().required(),
-  image: joi.string().pattern(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/).allow(null),
+  image: joi.string().lowercase().pattern(/\.(gif|jpe?g|tiff?|png|webp|bmp)$/i).allow(null),
   user_id: joi.number(),
 });
 
