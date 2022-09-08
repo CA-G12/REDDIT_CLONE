@@ -86,7 +86,6 @@ header .account {
 }
 
 .con-user-img {
-    background-image: url('https://images.theconversation.com/files/394/original/See_Explanation._Clicking_on_the_picture_will_download_the_highest_resolution_version_available.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip');
     width: 25px;
     height: 25px;
     background-size: cover;
