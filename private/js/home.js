@@ -1,3 +1,27 @@
+// let user = {};
+const UserName = document.querySelector('.cur-user-name');
+const userImage = document.querySelectorAll('.con-user-img');
+const user = { info: {} };
+fetch('/private/getUser', {
+  method: 'get',
+})
+  .then((res) => res.json())
+  .then((res) => {
+    if (res.user) {
+      user.info = res.user;
+      UserName.textContent = res.user.username;
+      userImage[0].style.backgroundImage = `url(${res.user.image})`;
+      userImage[1].style.backgroundImage = `url(${res.user.image})`;
+    } else if (res.path) {
+      window.location.href = res.path;
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+    // window.location.href = '/login';
+  });
+
+// ------------------------------------------------------------
 const searchContainer = document.querySelector('.search-container');
 const searchInput = document.querySelector('.search');
 const dropdown = document.querySelector('.dropdown');
@@ -97,6 +121,8 @@ createPostBtn.addEventListener('click', () => {
           console.log(res.post);
           postsCon.insertBefore(createPost(res.post), postsCon.firstChild);
           hideAddPostForm();
+        } else if (res.path) {
+          window.location.href = res.path;
         }
       })
       .catch((error) => console.log(error));
@@ -105,3 +131,4 @@ createPostBtn.addEventListener('click', () => {
     errorMessage.style.display = 'block';
   }
 });
+
