@@ -43,7 +43,7 @@ fetch('/private/posts', {
   .then((res) => {
     if (res.posts) {
       // console.log(res.posts);
-      res.posts.forEach((post) => {
+      res.posts.reverse().forEach((post) => {
         postsCon.appendChild(createPost(post));
       });
     } else if (res.path) {

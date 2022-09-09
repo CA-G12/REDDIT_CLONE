@@ -11,8 +11,8 @@ loginBtn.addEventListener('click', () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        email: email.value,
-        password: password.value,
+        email: email.value.trim(),
+        password: password.value.trim(),
       }),
     })
       .then((res) => res.json())
