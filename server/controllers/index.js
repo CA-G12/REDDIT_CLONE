@@ -1,6 +1,6 @@
 const { addUser, loginUser, getUserInfo } = require('./users');
-const { addPost } = require('./posts');
+const { addPost, getPosts } = require('./posts');
 
 module.exports = {
-  addUser, loginUser, addPost, getUserInfo,
+  addUser, loginUser, addPost, getUserInfo, getPosts
 };
