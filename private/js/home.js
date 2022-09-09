@@ -118,7 +118,6 @@ createPostBtn.addEventListener('click', () => {
           });
           errorMessage.style.display = 'block';
         } else if (res.post) {
-          console.log(res.post);
           postsCon.insertBefore(createPost(res.post), postsCon.firstChild);
           hideAddPostForm();
         } else if (res.path) {
