@@ -1,6 +1,20 @@
-// let user = {};
 const UserName = document.querySelector('.cur-user-name');
 const userImage = document.querySelectorAll('.con-user-img');
+const searchContainer = document.querySelector('.search-container');
+const searchInput = document.querySelector('.search');
+const dropdown = document.querySelector('.dropdown');
+const dropDownBtn = document.querySelector('.icons-container');
+const signBtns = document.querySelectorAll('.btn');
+const createPostCon = document.querySelector('.create-post');
+const createPostForm = document.querySelector('.create-post-form');
+const postContentInput = document.querySelector('.post-content');
+const postImageInput = document.querySelector('.image');
+const hiddenForm = Array.from(document.querySelectorAll('.hidden-form'));
+const cancelBtn = document.querySelector('.cancel');
+const createPostBtn = document.querySelector('.create-post-btn');
+const errorMessage = document.querySelector('.error-message');
+const postsCon = document.querySelector('.posts-container');
+
 const user = { info: {} };
 
 fetch('/private/getUser', {
@@ -22,11 +36,28 @@ fetch('/private/getUser', {
   });
 
 // ------------------------------------------------------------
-const searchContainer = document.querySelector('.search-container');
-const searchInput = document.querySelector('.search');
-const dropdown = document.querySelector('.dropdown');
-const dropDownBtn = document.querySelector('.icons-container');
-const signBtns = document.querySelectorAll('.btn');
+fetch('/private/posts', {
+  method: 'get',
+})
+  .then((res) => res.json())
+  .then((res) => {
+    if (res.posts) {
+      // console.log(res.posts);
+      res.posts.forEach((post) => {
+        postsCon.appendChild(createPost(post));
+      });
+    } else if (res.path) {
+      window.location.href = res.path;
+    } else if (res.msg) {
+      console.log(res.msg);
+    }
+  })
+  .catch((error) => {
+    window.location.href = '/login';
+  });
+
+// --------------------------Drop down menu ----------------------------------
+
 
 searchContainer.addEventListener('click', () => {
   searchContainer.style.border = '1px solid #0079d3';
@@ -53,14 +84,8 @@ Array.from(signBtns).forEach((btn) => {
   });
 });
 
-// ---------------------------------------------------------------------------------
+// ------------------------------add post DOM---------------------------------------------------
 
-const createPostCon = document.querySelector('.create-post');
-const createPostForm = document.querySelector('.create-post-form');
-const postContentInput = document.querySelector('.post-content');
-const postImageInput = document.querySelector('.image');
-const hiddenForm = Array.from(document.querySelectorAll('.hidden-form'));
-const cancelBtn = document.querySelector('.cancel');
 
 postContentInput.addEventListener('focus', () => {
   showAddPostForm();
@@ -89,11 +114,8 @@ function hideAddPostForm() {
   postContentInput.value = '';
   postImageInput.value = '';
 }
-// -----------------------------------------------------------------------
 
-const createPostBtn = document.querySelector('.create-post-btn');
-const errorMessage = document.querySelector('.error-message');
-const postsCon = document.querySelector('.posts-container');
+// -------------------------handle share new post button------------------------------------
 
 createPostBtn.addEventListener('click', () => {
   if (postContentInput.value) {
@@ -118,7 +140,16 @@ createPostBtn.addEventListener('click', () => {
           });
           errorMessage.style.display = 'block';
         } else if (res.post) {
-          postsCon.insertBefore(createPost(res.post), postsCon.firstChild);
+          const tempPost = {
+            id: res.post.id,
+            content: res.post.content,
+            post_img: res.post.image,
+            time: res.post.time,
+            username: user.info.username,
+            user_img: user.info.image,
+            vote: null,
+          }
+          postsCon.insertBefore(createPost(tempPost), postsCon.firstChild);
           hideAddPostForm();
         } else if (res.path) {
           window.location.href = res.path;
@@ -130,4 +161,3 @@ createPostBtn.addEventListener('click', () => {
     errorMessage.style.display = 'block';
   }
 });
-
