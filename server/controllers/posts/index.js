@@ -1,3 +1,4 @@
 const addPost = require('./addPost');
+const getPosts = require('./getPosts');
 
-module.exports = { addPost };
+module.exports = { addPost, getPosts };
