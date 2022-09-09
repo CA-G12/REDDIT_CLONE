@@ -2,6 +2,7 @@
 const UserName = document.querySelector('.cur-user-name');
 const userImage = document.querySelectorAll('.con-user-img');
 const user = { info: {} };
+
 fetch('/private/getUser', {
   method: 'get',
 })
@@ -17,8 +18,7 @@ fetch('/private/getUser', {
     }
   })
   .catch((error) => {
-    console.log(error);
-    // window.location.href = '/login';
+    window.location.href = '/login';
   });
 
 // ------------------------------------------------------------
