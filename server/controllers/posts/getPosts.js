@@ -2,7 +2,7 @@ const createError = require('http-errors');
 
 const { getPostsQuery } = require('../../database/queries');
 
-const addPost = (req, res, next) => {
+const getPosts = (req, res, next) => {
   getPostsQuery(req.token.id)
     .then((rows) => {
       if (rows.length) {
@@ -14,4 +14,4 @@ const addPost = (req, res, next) => {
     .catch((err) => { next(createError(500, `server error in getting user ${err}`)); });
 };
 
-module.exports = addPost;
+module.exports = getPosts;

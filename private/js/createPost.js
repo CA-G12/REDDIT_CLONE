@@ -1,12 +1,18 @@
-const createPost = (info) => {
+const createPost = (postObj) => {
   const post = document.createElement('article');
   post.className = 'post';
+  post.dataset.id = postObj.id;
 
   const voteBtns = document.createElement('div');
   voteBtns.className = 'vote-btns';
 
+
   const upBtn = document.createElement('i');
-  upBtn.classList.add('fa-light', 'fa-up', 'vote-btn');
+  if (postObj.vote === true) {
+    upBtn.classList.add('fa-solid', 'fa-up', 'vote-btn');
+  } else {
+    upBtn.classList.add('fa-light', 'fa-up', 'vote-btn');
+  }
   voteBtns.appendChild(upBtn);
 
   const votesCount = document.createElement('span');
@@ -16,8 +22,13 @@ const createPost = (info) => {
   voteBtns.appendChild(votesCount);
 
   const downBtn = document.createElement('i');
-  downBtn.classList.add('fa-light', 'fa-down', 'vote-btn');
+  if (postObj.vote === false) {
+    downBtn.classList.add('fa-solid', 'fa-down', 'vote-btn');
+  } else {
+    downBtn.classList.add('fa-light', 'fa-down', 'vote-btn');
+  }
   voteBtns.appendChild(downBtn);
+
 
   post.appendChild(voteBtns);
 
@@ -29,13 +40,14 @@ const createPost = (info) => {
 
   const userImg = document.createElement('div');
   userImg.className = 'user-img';
+  userImg.style.backgroundImage = `url(${postObj.user_img})`
   userInfo.appendChild(userImg);
 
   const userName = document.createElement('a');
   userName.className = 'user-name';
-  // temp
-  userName.href = '#';
-  userName.textContent = 'Temp_Name';
+
+  userName.href = `/user/${postObj.username}`;
+  userName.textContent = postObj.username;
   userInfo.appendChild(userName);
 
   postInfo.appendChild(userInfo);
@@ -45,13 +57,13 @@ const createPost = (info) => {
 
   const postTxt = document.createElement('div');
   postTxt.className = 'post-text';
-  postTxt.textContent = info.content;
+  postTxt.textContent = postObj.content;
   postContent.appendChild(postTxt);
 
-  if (info.image) {
+  if (postObj.post_img) {
     const postImg = document.createElement('img');
     postImg.className = 'post-img';
-    postImg.src = info.image;
+    postImg.src = postObj.post_img;
     postContent.appendChild(postImg);
   }
 
