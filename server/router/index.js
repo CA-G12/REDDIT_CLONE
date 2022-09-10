@@ -5,11 +5,6 @@ const { serverError } = require('../errors');
 const privateRouter = require('./private');
 const verifyToken = require('../middlewares/verifyToken');
 
-router.use((req, res, next) => {
-  res.clearCookie('token', { path: '/login' });
-  next();
-});
-
 router.get('/logout', (req, res) => {
   res.clearCookie('token').redirect('/');
 });
