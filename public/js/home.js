@@ -26,6 +26,5 @@ window.addEventListener('click', (e) => {
 Array.from(signBtns).forEach((btn) => {
   btn.addEventListener('click', (e) => {
     e.target.children[0].click();
-  })
+  });
 });
-
