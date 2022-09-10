@@ -28,7 +28,7 @@ fetch('/private/getUser', {
       userImage[0].style.backgroundImage = `url(${res.user.image})`;
       userImage[1].style.backgroundImage = `url(${res.user.image})`;
     } else if (res.path) {
-      window.location.href = res.path;
+      // window.location.href = res.path;
     }
   })
   .catch((error) => {
@@ -36,15 +36,44 @@ fetch('/private/getUser', {
   });
 
 // ------------------------------------------------------------
+
 fetch('/private/posts', {
   method: 'get',
 })
   .then((res) => res.json())
   .then((res) => {
     if (res.posts) {
-      // console.log(res.posts);
       res.posts.reverse().forEach((post) => {
         postsCon.appendChild(createPost(post));
+      });
+
+      const upVotes = Array.from(document.querySelectorAll('.fa-light.fa-up'));
+      const downVotes = Array.from(document.querySelectorAll('.fa-light.fa-down'));
+      const checkedUpVotes = Array.from(document.querySelectorAll('.fa-solid.fa-up'));
+      const checkedDownVotes = Array.from(document.querySelectorAll('fa-solid.fa-down'));
+
+      upVotes.forEach((upVoteBtn) => {
+        upVoteBtn.addEventListener('click', (e) => {
+          addUpVote(e.target.parentElement.parentElement, e.target);
+        });
+      });
+
+      downVotes.forEach((downVoteBtn) => {
+        downVoteBtn.addEventListener('click', (e) => {
+          addDownVote(e.target.parentElement.parentElement, e.target);
+        });
+      });
+
+      checkedUpVotes.forEach((upVoteBtn) => {
+        upVoteBtn.addEventListener('click', (e) => {
+          removeVote(e.target.parentElement.parentElement, e.target);
+        });
+      });
+
+      checkedDownVotes.forEach((downVoteBtn) => {
+        downVoteBtn.addEventListener('click', (e) => {
+          removeVote(e.target.parentElement.parentElement, e.target);
+        });
       });
     } else if (res.path) {
       window.location.href = res.path;
@@ -56,8 +85,114 @@ fetch('/private/posts', {
     window.location.href = '/login';
   });
 
-// --------------------------Drop down menu ----------------------------------
+function addUpVote(postELe, btn) {
+  fetch('/private/votes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      postId: postELe.dataset.id,
+      vote: true,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.err) {
+        console.log('Invalid', res.err);
+      } else if (res.votes) {
+        btn.nextElementSibling.textContent = res.votes.post_votes;
+        addClickStyle(btn);
+        if (btn.nextElementSibling.nextElementSibling.classList.contains('fa-solid')) {
+          removeClickStyle(btn.nextElementSibling.nextElementSibling);
+        }
+      } else if (res.path) {
+        window.location.href = res.path;
+      }
+    })
+    .catch((error) => console.log(error));
+}
 
+function addDownVote(postELe, btn) {
+  fetch('/private/votes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      postId: postELe.dataset.id,
+      vote: false,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.err) {
+        console.log('Invalid', res.err);
+      } else if (res.votes) {
+        btn.previousElementSibling.textContent = res.votes.post_votes;
+        addClickStyle(btn);
+        if (btn.previousElementSibling.previousElementSibling.classList.contains('fa-up')) {
+          removeClickStyle(btn.previousElementSibling.previousElementSibling);
+        }
+      } else if (res.path) {
+        window.location.href = res.path;
+      }
+    })
+    .catch((error) => console.log(error));
+}
+function removeVote(postELe, btn) {
+  fetch('/private/votes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      postId: postELe.dataset.id,
+      vote: null,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.err) {
+        console.log('Invalid', res.err);
+      } else if (res.votes) {
+        if (btn.classList.contains('fa-up')) {
+          btn.nextElementSibling.textContent = res.votes.post_votes;
+        } else {
+          btn.previousElementSibling.textContent = res.votes.post_votes;
+        }
+        removeClickStyle(btn);
+      } else if (res.path) {
+        window.location.href = res.path;
+      }
+    })
+    .catch((error) => console.log(error));
+}
+function addClickStyle(ele) {
+  ele.classList.remove('fa-light');
+  ele.classList.add('fa-solid');
+
+  ele.addEventListener('click', (e) => {
+    removeVote(e.target.parentElement.parentElement, e.target);
+  });
+}
+function removeClickStyle(ele) {
+  ele.classList.remove('fa-solid');
+  ele.classList.add('fa-light');
+
+
+
+  if (ele.classList.contains('fa-up')) {
+    ele.addEventListener('click', (e) => {
+      addUpVote(e.target.parentElement.parentElement, e.target);
+    });
+  } else {
+    ele.addEventListener('click', (e) => {
+      removeVote(e.target.parentElement.parentElement, e.target);
+    });
+  }
+}
+// --------------------------Drop down menu ----------------------------------
 
 searchContainer.addEventListener('click', () => {
   searchContainer.style.border = '1px solid #0079d3';
@@ -85,7 +220,6 @@ Array.from(signBtns).forEach((btn) => {
 });
 
 // ------------------------------add post DOM---------------------------------------------------
-
 
 postContentInput.addEventListener('focus', () => {
   showAddPostForm();
@@ -148,7 +282,7 @@ createPostBtn.addEventListener('click', () => {
             username: user.info.username,
             user_img: user.info.image,
             vote: null,
-          }
+          };
           postsCon.insertBefore(createPost(tempPost), postsCon.firstChild);
           hideAddPostForm();
         } else if (res.path) {

@@ -4,7 +4,7 @@ const { getUserPublicQuery } = require('../../database/queries');
 const getUserInfo = (req, res, next) => {
   getUserPublicQuery(req.token.id)
     .then((rows) => {
-      if (rows.length) {
+      if (rows.length !== 0) {
         res.json({ user: rows[0] });
       } else {
         res.status(300).json({ path: '/login' });

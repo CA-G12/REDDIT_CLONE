@@ -18,7 +18,11 @@ const createPost = (postObj) => {
   const votesCount = document.createElement('span');
   votesCount.className = 'votes-count';
   // temp
-  votesCount.textContent = 'vote';
+  if(postObj.votes_count){
+    votesCount.textContent = postObj.votes_count;
+  }else{
+    votesCount.textContent ='vote';
+  }
   voteBtns.appendChild(votesCount);
 
   const downBtn = document.createElement('i');

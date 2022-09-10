@@ -25,4 +25,8 @@ const postSchema = joi.object({
   user_id: joi.number(),
 });
 
-module.exports = { signupSchema, loginSchema, postSchema };
+const voteSchema = joi.object({
+  vote: joi.boolean().allow(null),
+});
+
+module.exports = { signupSchema, loginSchema, postSchema, voteSchema };
