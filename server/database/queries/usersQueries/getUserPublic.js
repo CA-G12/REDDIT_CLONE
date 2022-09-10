@@ -6,7 +6,7 @@ const getUserPublicQuery = (id) => {
     values: [id],
   };
   return connection.query(sql)
-    .then((res) => res.rows);
+    .then((res) => res.rows[0]);
 };
 
 module.exports = getUserPublicQuery;

@@ -28,7 +28,7 @@ fetch('/private/getUser', {
       userImage[0].style.backgroundImage = `url(${res.user.image})`;
       userImage[1].style.backgroundImage = `url(${res.user.image})`;
     } else if (res.path) {
-      // window.location.href = res.path;
+      window.location.href = res.path;
     }
   })
   .catch((error) => {
@@ -168,6 +168,7 @@ function removeVote(postELe, btn) {
     })
     .catch((error) => console.log(error));
 }
+
 function addClickStyle(ele) {
   ele.classList.remove('fa-light');
   ele.classList.add('fa-solid');
@@ -176,11 +177,14 @@ function addClickStyle(ele) {
     removeVote(e.target.parentElement.parentElement, e.target);
   });
 }
+
 function removeClickStyle(ele) {
   ele.classList.remove('fa-solid');
   ele.classList.add('fa-light');
 
-
+  // ele.removeEventListener('click', (e) => {
+  //   removeVote(e.target.parentElement.parentElement, e.target);
+  // });
 
   if (ele.classList.contains('fa-up')) {
     ele.addEventListener('click', (e) => {

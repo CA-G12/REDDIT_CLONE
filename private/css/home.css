@@ -349,3 +349,12 @@ main .post:hover {
     border: 1px solid grey;
     margin: 0px 1px;
 }
+
+.fa-solid.fa-up{
+    color :#ff4500 !important;
+    
+}
+.fa-solid.fa-down{
+    color :#0079d3 !important;
+
+}

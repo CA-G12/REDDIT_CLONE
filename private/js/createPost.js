@@ -9,9 +9,9 @@ const createPost = (postObj) => {
 
   const upBtn = document.createElement('i');
   if (postObj.vote === true) {
-    upBtn.classList.add('fa-solid', 'fa-up', 'vote-btn');
+    upBtn.classList.add('vote-btn', 'fa-solid', 'fa-up');
   } else {
-    upBtn.classList.add('fa-light', 'fa-up', 'vote-btn');
+    upBtn.classList.add('vote-btn', 'fa-light', 'fa-up');
   }
   voteBtns.appendChild(upBtn);
 
@@ -27,9 +27,9 @@ const createPost = (postObj) => {
 
   const downBtn = document.createElement('i');
   if (postObj.vote === false) {
-    downBtn.classList.add('fa-solid', 'fa-down', 'vote-btn');
+    downBtn.classList.add('vote-btn', 'fa-solid', 'fa-down');
   } else {
-    downBtn.classList.add('fa-light', 'fa-down', 'vote-btn');
+    downBtn.classList.add('vote-btn', 'fa-light', 'fa-down');
   }
   voteBtns.appendChild(downBtn);
 
