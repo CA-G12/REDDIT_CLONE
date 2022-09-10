@@ -168,7 +168,7 @@ main {
 
 .create-post {
     display: flex;
-    width: (100% - 20px);
+    width: 630px;
     align-items: center;
     background-color: #FFF;
     padding: 10px;
@@ -296,6 +296,7 @@ main .post:hover {
 .post-content {
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 .post-text {
     margin-left: 5px;
