@@ -1,6 +1,7 @@
 const { join } = require('path');
 const router = require('express').Router();
-const { addUser, loginUser } = require('../controllers');
+const { addUser, loginUser, getPostsPublic } = require('../controllers');
+
 const { serverError } = require('../errors');
 const privateRouter = require('./private');
 const verifyToken = require('../middlewares/verifyToken');
@@ -27,6 +28,7 @@ router.get('/login', (req, res) => {
   res.clearCookie('token').status(200).sendFile(join(__dirname, '..', '..', 'public', 'login.html'));
 });
 
+router.get('/posts', getPostsPublic);
 router.use(serverError);
 
 module.exports = router;

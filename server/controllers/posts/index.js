@@ -1,4 +1,4 @@
 const addPost = require('./addPost');
 const getPosts = require('./getPosts');
-
-module.exports = { addPost, getPosts };
+const getPostsPublic = require('./getPostsPublic');
+module.exports = { addPost, getPosts, getPostsPublic };
